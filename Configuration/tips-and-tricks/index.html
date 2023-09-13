@@ -138,7 +138,19 @@
                     <main>
                         <h1 id="tips-and-tricks"><a class="header" href="#tips-and-tricks">Tips and tricks</a></h1>
 <h2 id="overlay"><a class="header" href="#overlay">Overlay</a></h2>
-<p>In Vinegar, a directory under the configuration directory called <code>overlay</code> will be copied directly to the Roblox Player and Studio upon launching; this can be used to override files of Roblox, allowing for modifications!</p>
+<p>In Vinegar, a directory called <code>overlay</code> will be copied directly to the Roblox Player and Studio upon launching; this can be used to override files of Roblox, allowing for modifications!</p>
+<p>The <code>overlay</code> folder is not created by default, and it is located always along with the configuration file, which is depending on your install method:</p>
+<ul>
+<li>On Flatpak, it's located in <code>~/.var/app/io.github.vinegarhq.Vinegar/config/vinegar/overlay</code></li>
+<li>On other methods, it's located in <code>~/.config/vinegar/overlay</code></li>
+</ul>
+<p>Vinegar requires no extra configuration for the folder to work.</p>
+<p>Example replacement of Roblox's default death sound:</p>
+<pre><code>── overlay
+   └── content
+       └── sounds
+           └── ouch.ogg
+</code></pre>
 <h2 id="fflags"><a class="header" href="#fflags">FFlags</a></h2>
 <p>This section is undocumented; below is a list of fflags that can be set. Credits to <a href="https://github.com/pizzaboxer/bloxstrap/blob/main/Bloxstrap/FastFlagManager.cs">Bloxstrap</a>.</p>
 <pre><code class="language-toml"># See https://github.com/pizzaboxer/bloxstrap/wiki/A-guide-to-FastFlags#gui-hiding
