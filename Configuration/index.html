@@ -151,7 +151,6 @@
 <p>The configuration file, <code>config.toml</code>, is read from <code>~/.config/vinegar/config.toml</code> (or <code>~/.var/app/io.github.vinegarhq.Vinegar/config/vinegar/config.toml</code> if using the Flatpak). It may be edited using any text editor (such as <code>nano</code>). First ensure the <code>config/vinegar</code> directory is created.</p>
 <h2 id="configuration-values"><a class="header" href="#configuration-values">Configuration Values</a></h2>
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
-<tr><td><code>launcher</code></td><td>the program that is used to launch Wine when launching Roblox; this can be set to <code>gamemoderun</code>.</td><td>none</td></tr>
 <tr><td><code>wineroot</code></td><td>the path to a valid Wine 'root' installation directory. For Flatpak users; see Notes.</td><td>none</td></tr>
 <tr><td><code>dxvk_version</code></td><td>the DXVK version to be used; this can be set to legacy DXVK for old GPUs that don't support modern Vulkan.</td><td><code>&quot;2.3&quot;</code></td></tr>
 <tr><td><code>multiple_instances</code></td><td>allow for multiple instances of Roblox to be running simultaneously</td><td><code>false</code></td></tr>
@@ -159,6 +158,7 @@
 </tbody></table>
 <p>For Studio or Player configurations, they are specified under the <code>[player]</code> or <code>[studio]</code> section.</p>
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>launcher</code></td><td>the program that is used to launch Wine when launching Roblox</td><td>none</td></tr>
 <tr><td><code>channel</code></td><td>the Roblox release channel</td><td><code>&quot;live&quot;</code></td></tr>
 <tr><td><code>renderer</code></td><td>selects the rendering engine to be used by Roblox via FFlags. See Notes for accepted renders.</td><td><code>&quot;D3D11&quot;</code></td></tr>
 <tr><td><code>forced_version</code></td><td>forces Vinegar to use a specific version, the release channel must be adjusted for the version.</td><td>none</td></tr>
@@ -187,12 +187,12 @@
 <pre><code class="language-toml"># DO NOT COPY, USE ONLY AS EXAMPLE
 
 wineroot = &quot;/home/meow/wine-ge&quot;
-launcher = &quot;gamemoderun&quot;
 
 [env]
 WINEFSYNC = &quot;1&quot;
 
 [player]
+launcher = &quot;gamemoderun&quot;
 dxvk = false
 renderer = &quot;Vulkan&quot;
 channel = &quot;zcanary&quot;
