@@ -161,6 +161,14 @@ emaint sync
 <p>Alternatively, you can use the live ebuild by creating a <code>/etc/portage/package.accept_keywords/vinegar</code> file with the following content:</p>
 <pre><code>games-util/vinegar **
 </code></pre>
+<h3 id="source-mage"><a class="header" href="#source-mage">Source Mage</a></h3>
+<p>First, make sure the games grimoire is added:</p>
+<pre><code class="language-sh">scribe add games
+</code></pre>
+<p>Then, cast the spell:</p>
+<pre><code class="language-sh">cast vinegar
+</code></pre>
+<p>(Do note that on 64-bit systems, 32-bit wine and gnutls will have to be sourced elsewhere as there is no multilib support)</p>
 
                     </main>
 
