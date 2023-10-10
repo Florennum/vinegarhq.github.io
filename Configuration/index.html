@@ -153,7 +153,7 @@
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
 <tr><td><code>wineroot</code></td><td>the path to a valid Wine 'root' installation directory. For Flatpak users; see Notes.</td><td>none</td></tr>
 <tr><td><code>dxvk_version</code></td><td>the DXVK version to be used; this can be set to legacy DXVK for old GPUs that don't support modern Vulkan.</td><td><code>&quot;2.3&quot;</code></td></tr>
-<tr><td><code>multiple_instances</code></td><td>allow for multiple instances of Roblox to be running simultaneously</td><td><code>false</code></td></tr>
+<tr><td><code>multiple_instances</code></td><td>allow for multiple instances of Roblox to be running simultaneously; see notes about ESYNC</td><td><code>false</code></td></tr>
 <tr><td><code>sanitize_env</code></td><td>sanitize the global environment, hand-picked variables are allowed through.</td><td><code>false</code></td></tr>
 </tbody></table>
 <p>For Studio or Player configurations, they are specified under the <code>[player]</code> or <code>[studio]</code> section.</p>
@@ -170,8 +170,13 @@
 <tr><td><code>[fflags]</code></td><td>the sub-section used to set FFlags for the given application type.</td><td>Player: <code>DFIntTaskSchedulerTargetFps = 640</code></td></tr>
 <tr><td><code>[env]</code></td><td>the sub-section used to set environment variables for the given application type.</td><td>Player: <code>DXVK_HUD = &quot;fps&quot;</code></td></tr>
 </tbody></table>
+<p>UI Settings</p>
+<table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>enabled</code></td><td>enables and disables the UI.</td><td>Player: <code>enabled = true</code>, Studio: <code>enabled = true</code></td></tr>
+</tbody></table>
 <h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
 <ul>
+<li>If using <code>multiple_instances</code>, WINEESYNC must be set to &quot;0&quot; in env. Otherwise, Roblox will not start!</li>
 <li>If you're using Nvidia PRIME, the drivers (on X server 1.20.7 and newer) and/or dxvk should automatically use your dGPU by default.</li>
 <li>The renderer must be one of the following: <code>&quot;OpenGL&quot;</code>, <code>&quot;D3D11FL10&quot;</code>, <code>&quot;D3D11&quot;</code>, <code>&quot;Vulkan&quot;</code>.</li>
 <li>Ensure that when setting a string, the value must be in quotes: <code>channel = &quot;zintegration&quot;</code></li>
