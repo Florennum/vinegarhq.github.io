@@ -167,7 +167,19 @@
 <tr><td><code>[player]</code></td><td>Binary configuration for Player</td></tr>
 <tr><td><code>[studio]</code></td><td>Binary configuration for Studio</td></tr>
 <tr><td><code>[env]</code></td><td>Global environment, this is similar to <code>[global.env]</code>.</td></tr>
+<tr><td><code>[splash]</code></td><td>Configuraton for the loading screen of Vinegar</td></tr>
 </tbody></table>
+<h3 id="splash-configuration"><a class="header" href="#splash-configuration">Splash Configuration</a></h3>
+<table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>enabled</code></td><td>Deterimes if the splash window appears or not</td><td><code>true</code></td></tr>
+<tr><td><code>background</code></td><td>background of the splash window</td><td><code>0x242424</code></td></tr>
+<tr><td><code>foreground</code></td><td>foreground of the text in the splash</td><td><code>0xfafafa</code></td></tr>
+<tr><td><code>Red</code></td><td>background color of the 'Cancel' button</td><td><code>0xcc241d</code></td></tr>
+<tr><td><code>Gray1</code></td><td>background color of the progress bar</td><td><code>0x303030</code></td></tr>
+<tr><td><code>Gray2</code></td><td>foreground color of the description</td><td><code>0x777777</code></td></tr>
+<tr><td><code>Accent</code></td><td>color of the 'Show Log' and progress bar</td><td><code>0x8fbc5e</code></td></tr>
+</tbody></table>
+<p>The colors are in hexadecimal format, stored as numbers internally such as <code>0xff00ff</code>.</p>
 <h3 id="binary-configuration"><a class="header" href="#binary-configuration">Binary Configuration</a></h3>
 <p>This section are the available options for the global, Studio or Player configurations, they are specified under their sections as listed above.</p>
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
@@ -184,7 +196,6 @@ when using DXVK, ensure that the renderer is <code>&quot;D3D11&quot;</code>, oth
 <table><thead><tr><th>Sub-section</th><th>Default</th></tr></thead><tbody>
 <tr><td><code>[fflags]</code></td><td>Player: <code>DFIntTaskSchedulerTargetFps = 640</code></td></tr>
 <tr><td><code>[env]</code></td><td>none</td></tr>
-<tr><td>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d7b7d2 (update configuration)</td><td></td></tr>
 </tbody></table>
 <h3 id="example-configuration"><a class="header" href="#example-configuration">Example configuration</a></h3>
 <blockquote>
