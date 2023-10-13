@@ -150,13 +150,13 @@
 <h3 id="manually"><a class="header" href="#manually">Manually</a></h3>
 <p>The configuration file, <code>config.toml</code>, is read from <code>~/.config/vinegar/config.toml</code> (or <code>~/.var/app/io.github.vinegarhq.Vinegar/config/vinegar/config.toml</code> if using the Flatpak). It may be edited using any text editor (such as <code>nano</code>). First ensure the <code>config/vinegar</code> directory is created.</p>
 <h2 id="configuration-values"><a class="header" href="#configuration-values">Configuration Values</a></h2>
-<table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
+<table><thead><tr><th>Name</th><th>Description</th><th>Default</th></tr></thead><tbody>
 <tr><td><code>wineroot</code></td><td>the path to a valid Wine 'root' installation directory. For Flatpak users; see Notes.</td><td>none</td></tr>
 <tr><td><code>dxvk_version</code></td><td>the DXVK version to be used; this can be set to legacy DXVK for old GPUs that don't support modern Vulkan.</td><td><code>&quot;2.3&quot;</code></td></tr>
 <tr><td><code>multiple_instances</code></td><td>allow for multiple instances of Roblox to be running simultaneously; see notes about ESYNC</td><td><code>false</code></td></tr>
 <tr><td><code>sanitize_env</code></td><td>sanitize the global environment, hand-picked variables are allowed through.</td><td><code>false</code></td></tr>
 </tbody></table>
-<p>For Studio or Player configurations, they are specified under the <code>[player]</code> or <code>[studio]</code> section.</p>
+<p>If you're using the Flatpak, ensure that the path of the <code>wineroot</code> configuration option is allowed access from the Flatpak, as if it is a path outside of <code>~/.var/app/io.github.vinegarhq.Vinegar</code> Vinegar won't be able to access the directory: <code>flatpak override --user --filesystem=/path/to/wineroot</code></p>
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
 <tr><td><code>launcher</code></td><td>the program that is used to launch Wine when launching Roblox</td><td>none</td></tr>
 <tr><td><code>channel</code></td><td>the Roblox release channel</td><td><code>&quot;live&quot;</code></td></tr>
@@ -165,26 +165,30 @@
 <tr><td><code>auto_kill_prefix</code></td><td>tells Vinegar to automatically kill the wineprefix after the application closes.</td><td>Player: <code>true</code>, Studio: <code>false</code></td></tr>
 <tr><td><code>dxvk</code></td><td>automatically uses DXVK for the application and installs if necessary.</td><td>Player: <code>true</code>, Studio: <code>false</code></td></tr>
 </tbody></table>
-<p>Sub-sections for FFlags and environment variables for Player or Studio are specified as <code>[player.env]</code>/<code>[studio.env]</code> or <code>[player.fflags]</code>/<code>[studio.fflags]</code></p>
-<table><thead><tr><th>Sub-section</th><th>Description</th><th>Default</th></tr></thead><tbody>
-<tr><td><code>[fflags]</code></td><td>the sub-section used to set FFlags for the given application type.</td><td>Player: <code>DFIntTaskSchedulerTargetFps = 640</code></td></tr>
-<tr><td><code>[env]</code></td><td>the sub-section used to set environment variables for the given application type.</td><td>Player: <code>DXVK_HUD = &quot;fps&quot;</code></td></tr>
+<table><thead><tr><th>Section</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>[global]</code></td><td>The global binary configuration for both Player and Studio, either can override, but FFlags and Environment are appended.</td></tr>
+<tr><td><code>[player]</code></td><td>Binary configuration for Player</td></tr>
+<tr><td><code>[studio]</code></td><td>Binary configuration for Studio</td></tr>
+<tr><td><code>[env]</code></td><td>Global environment, this is similar to <code>[global.env]</code>.</td></tr>
 </tbody></table>
-<p>UI Settings</p>
+<h3 id="binary-configuration"><a class="header" href="#binary-configuration">Binary Configuration</a></h3>
+<p>This section are the available options for the global, Studio or Player configurations, they are specified under their sections as listed above.</p>
 <table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
-<tr><td><code>enabled</code></td><td>enables and disables the UI.</td><td>Player: <code>enabled = true</code>, Studio: <code>enabled = true</code></td></tr>
+<tr><td><code>channel</code></td><td>the Roblox release channel</td><td><code>&quot;live&quot;</code></td></tr>
+<tr><td><code>launcher</code></td><td>the program that is used to launch Wine when launching Roblox; this can be set to <code>gamemoderun</code>.</td><td>none</td></tr>
+<tr><td><code>renderer</code></td><td>selects the rendering engine to be used by Roblox via FFlags. See Notes for accepted renders.</td><td><code>&quot;D3D11&quot;</code></td></tr>
+<tr><td><code>forced_version</code></td><td>forces Vinegar to use a specific version, the release channel must be adjusted for the version.</td><td>none</td></tr>
+<tr><td><code>auto_kill_prefix</code></td><td>automatically kill the wineprefix after the process exits                      .</td><td><code>true</code></td></tr>
+<tr><td><code>dxvk</code></td><td>automatically uses DXVK for the application and installs if necessary.</td><td><code>true</code></td></tr>
 </tbody></table>
-<h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
-<ul>
-<li>If using <code>multiple_instances</code>, WINEESYNC must be set to &quot;0&quot; in env. Otherwise, Roblox will not start!</li>
-<li>If you're using Nvidia PRIME, the drivers (on X server 1.20.7 and newer) and/or dxvk should automatically use your dGPU by default.</li>
-<li>The renderer must be one of the following: <code>&quot;OpenGL&quot;</code>, <code>&quot;D3D11FL10&quot;</code>, <code>&quot;D3D11&quot;</code>, <code>&quot;Vulkan&quot;</code>.</li>
-<li>Ensure that when setting a string, the value must be in quotes: <code>channel = &quot;zintegration&quot;</code></li>
-<li>When using DXVK, ensure that the renderer is <code>&quot;D3D11&quot;</code>, otherwise Roblox will not utilize DXVK.</li>
-<li>If you're using the Flatpak, ensure that the path of the <code>wineroot</code> configuration option is allowed access from the Flatpak, as if it is a path outside of <code>~/.var/app/io.github.vinegarhq.Vinegar</code> Vinegar won't be able to access the directory: <code>flatpak override --user --filesystem=/path/to/wineroot</code></li>
-<li>If you're using the Vinegar Flatpak and wish to use gamescope through the <code>launcher</code> setting, you MUST use their Flatpak versions, <code>org.freedesktop.Platform.VulkanLayer.gamescope</code>. Using gamescope from your distro will not work.</li>
-<li>When using MangoHud and using the Flatpak (<code>MANGOHUD</code> set to <code>&quot;1&quot;</code>), please make sure to run <code>flatpak override --user --filesystem=xdg-config/MangoHud:ro</code>, to allow the Vinegar Flatpak to access the MangoHud configuration in your home.</li>
-</ul>
+<p>The renderer must be one of the following: <code>&quot;OpenGL&quot;</code>, <code>&quot;D3D11FL10&quot;</code>, <code>&quot;D3D11&quot;</code>, <code>&quot;Vulkan&quot;</code>;
+when using DXVK, ensure that the renderer is <code>&quot;D3D11&quot;</code>, otherwise Roblox will not utilize DXVK.</p>
+<p>Sub-sections for FFlags and environment variables are specified with the section (eg. <code>[player.env]</code>)</p>
+<table><thead><tr><th>Sub-section</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>[fflags]</code></td><td>Player: <code>DFIntTaskSchedulerTargetFps = 640</code></td></tr>
+<tr><td><code>[env]</code></td><td>none</td></tr>
+<tr><td>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d7b7d2 (update configuration)</td><td></td></tr>
+</tbody></table>
 <h3 id="example-configuration"><a class="header" href="#example-configuration">Example configuration</a></h3>
 <blockquote>
 <p><strong>Note:</strong> The following configuration file is not meant to be copied or used. It is only shown for demonstrating how the configuration values above are laid out in the actual file.</p>
@@ -196,10 +200,12 @@ wineroot = &quot;/home/meow/wine-ge&quot;
 [env]
 WINEFSYNC = &quot;1&quot;
 
-[player]
+[global]
 launcher = &quot;gamemoderun&quot;
 dxvk = false
 renderer = &quot;Vulkan&quot;
+
+[player]
 channel = &quot;zcanary&quot;
 
 [player.env]
