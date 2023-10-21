@@ -141,9 +141,83 @@
 <h4 id="cursor-fails-to-lock"><a class="header" href="#cursor-fails-to-lock">Cursor fails to lock</a></h4>
 <p>This is due to a Roblox update causing an incompatibility with Wayland's handling of mouse events via XWayland. Switching to X11 on your display manager fixes this issue.</p>
 <h4 id="white-screen"><a class="header" href="#white-screen">White Screen</a></h4>
-<p>This specific problem can be the same as many other root causes, a common one is your graphics card not supporting Vulkan, or is missing the graphics libraries required for Wine; you can see <a href="https://github.com/lutris/docs/blob/master/InstallingDrivers.md">Lutris Docs: Installing Drivers</a></p>
-<p>This may also be your GPU not supporting Vulkan or not supporting modern Vulkan; Use the OpenGL renderer, or set the installed DXVK version to one which includes a legacy version of Vulkan that your GPU supports.</p>
+<p>This specific problem can be the same as many other root causes, a common one is your system missing the graphics libraries required for Wine; you can check <a href="https://github.com/lutris/docs/blob/master/InstallingDrivers.md">Lutris Docs: Installing Drivers</a> out for more information.</p>
+<p>This may also indicate your GPU not supporting Vulkan or not supporting modern Vulkan; Use the OpenGL renderer, or set the installed DXVK version to one which includes a legacy version of Vulkan that your GPU supports.</p>
+<h4 id="make-sure-there-are-no-stale-wineservers-running"><a class="header" href="#make-sure-there-are-no-stale-wineservers-running">Make sure there are no stale wineservers running</a></h4>
+<p>There are multiple reasons for why this would occur, but <code>vinegar kill</code> will suffice in order to fix the issue.</p>
+<h4 id="roblox-studio-stuck-on-the-splash-screen"><a class="header" href="#roblox-studio-stuck-on-the-splash-screen">Roblox Studio stuck on the splash screen</a></h4>
+<p>This usually happens due to issues with the DPI. In order to fix it, set the DPI to 97 by running <code>vinegar exec winecfg</code> to open the Wine configuration, and then head to the Graphics tab. There should be a DPI option at the bottom of the page.</p>
+<p>A DPI greater than 96 could be set, but this causes in-game GUIs to be larger than normal. Also, because of a Wine issue, using a non-default DPI will cause the Roblox viewport to be a bit blurry. Additionally, make sure that the DPI is an even number, otherwise GUIs will be blurry.</p>
+<h4 id="unable-to-log-in-through-the-studio-or-player-apps"><a class="header" href="#unable-to-log-in-through-the-studio-or-player-apps">Unable to log in through the Studio or Player apps</a></h4>
+<p>This occurs due to WebView2 issues with Wine.</p>
+<p>There are 2 workarounds:</p>
+<ul>
+<li>
+<p>Quick Login (Player): Click on &quot;Log in with another device&quot;, and enter the code displayed on the other device/website.</p>
+</li>
+<li>
+<p>Website (Player and Studio): Log in through the <a href="https://roblox.com">Roblox website</a> and launch/edit an experience.</p>
+</li>
+</ul>
+<h4 id="your-gpu-is-incompatible-error-when-launching-roblox-studio"><a class="header" href="#your-gpu-is-incompatible-error-when-launching-roblox-studio">&quot;Your GPU is incompatible&quot; error when launching Roblox Studio</a></h4>
+<p>This issue is most commonly caused by the Wine build not having the Vulkan ChildWindow patch applied. There are a couple solutions:</p>
+<ul>
+<li>
+<p>Using the <a href="https://vinegarhq.github.io/Installation/guides/flatpak.html">Vinegar flatpak</a>, which includes the ChildWindow patch;</p>
+</li>
+<li>
+<p>Using a Wine build that has the ChildWindow patch enabled (such as <a href="https://github.com/GloriousEggroll/wine-ge-custom">Wine GE</a>);</p>
+</li>
+<li>
+<p>Disabling DXVK in the Vinegar configuration.</p>
+</li>
+</ul>
+<h4 id="memory-dump"><a class="header" href="#memory-dump">Memory Dump</a></h4>
+<p>This is because of <a href="https://gitlab.winehq.org/wine/wine/-/commit/ea640f6cece7660ffc853b7d574fbe52af34901a">commit ea640f6c</a> (on Wine 8.16 and newer) causing Roblox to create a memory dump.</p>
+<p>There are 2 workarounds:</p>
+<ul>
+<li>
+<p>Using the <a href="https://vinegarhq.github.io/Installation/guides/flatpak.html">Vinegar flatpak</a>.</p>
+</li>
+<li>
+<p>Using <a href="https://github.com/GloriousEggroll/wine-ge-custom/releases">Wine-GE</a> or a patched build of Wine with the above commit reverted.</p>
+</li>
+</ul>
+<h4 id="buggy-roblox-studio-fonts"><a class="header" href="#buggy-roblox-studio-fonts">Buggy Roblox Studio fonts</a></h4>
+<p>This is due to an incompatibility with WineD3D. Enabling DXVK in the configuration file should solve this issue.</p>
+<h4 id="vulkanvulkanh-not-found-when-compiling-vinegar"><a class="header" href="#vulkanvulkanh-not-found-when-compiling-vinegar">Vulkan/Vulkan.h not found when compiling Vinegar</a></h4>
+<p>Vulkan development tools are required for building Vinegar with splash screen support. They're usually installed using a separate package, such as: </p>
+<ul>
+<li><code>vulkan-loader-dev</code> in Ubuntu.</li>
+<li><code>vulkan-loader-devel</code> in Fedora.</li>
+<li><code>vulkan-devel</code> in Arch-based distros.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> If you're using a distribution that doesn't ship the development packages, they may be compiled using the following guide: <a href="https://github.com/KhronosGroup/Vulkan-Loader/blob/main/BUILD.md#building-on-linux">Vulkan-Loader Build Instructions</a>.</p>
+</blockquote>
+<h4 id="shortcuts-for-roblox-appstudio-not-appearing"><a class="header" href="#shortcuts-for-roblox-appstudio-not-appearing">Shortcuts for Roblox App/Studio not appearing</a></h4>
+<p>This usually happens with the Vinegar Flatpak. The fix is rebooting the system.</p>
 <h4 id="stuttering-and-freezing-nvidia-gpu"><a class="header" href="#stuttering-and-freezing-nvidia-gpu">Stuttering and freezing (Nvidia GPU)</a></h4>
+<p>Although stuttering can happen for many different reasons, it's a very common issue on Nvidia. It seems that Nvidia's drivers (on Wayland, also varies widely between cards of different generations) have major issues with stuttering and unexplainable frame locking in certain systems, but only if the window is fullscreen. This issue has been confirmed to exist for configurations where the Nvidia GPU drives the display and ones where PRIME offload is used (IGPU drives the display, DGPU renders the game).</p>
+<p>There's no known fix (as of October 14th, 2023), but the following workarounds might help depending on the system:</p>
+<ul>
+<li>
+<p>Switching to X11:
+Unfortunately, NVIDIA's drivers still have many Wayland/XWayland issues. Reverting to X11 might be the easiest fix.</p>
+</li>
+<li>
+<p>Using integrated graphics (only for systems with PRIME render offload):
+Vinegar chooses the discrete graphics by default if using the Vulkan or DXVK. Configuring Vinegar to use the integrated graphics instead could potentially improve stability, at the cost of performance. To achieve this, <code>MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = &quot;1&quot;</code> may be added to Vinegar's env configuration.
+If the stutters are gone after doing this, they were being caused by Nvidia's drivers.</p>
+</li>
+<li>
+<p>Disabling fullscreen:
+If none of the workarounds above work or apply, consider using Roblox windowed instead of fullscreen.
+=======
+This may also be your GPU not supporting Vulkan or not supporting modern Vulkan; Use the OpenGL renderer, or set the installed DXVK version to one which includes a legacy version of Vulkan that your GPU supports.</p>
+</li>
+</ul>
+<h4 id="stuttering-and-freezing-nvidia-gpu-1"><a class="header" href="#stuttering-and-freezing-nvidia-gpu-1">Stuttering and freezing (Nvidia GPU)</a></h4>
 <p>Although stuttering can happen for many different reasons, it's a very common issue for Nvidia machines. It seems that Nvidia's drivers (on Wayland) have major issues with stuttering and unexplainable frame locking in certain systems, but only if the window is fullscreen. This issue has been confirmed to exist for configurations where the Nvidia GPU drives the display and ones where PRIME offload is used (IGPU drives the display, DGPU renders the game).</p>
 <p>There's no known fix (as of 14th Oct. 2023), but the following workarounds might help depending on your system:</p>
 <ul>
